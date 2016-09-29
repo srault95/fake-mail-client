@@ -1,0 +1,37 @@
+global:
+  backend: default
+  host: localhost
+  port: 2500
+  source_address: null
+  parallel: 1
+  count: 1
+  domains: &default_domains
+    - example.org
+  mynetworks: &default_mynetworks
+    - 192.168.1.1
+
+tests:
+  -
+    id: test-1
+    is_out: false
+    from_ip: 1.1.1.1
+    #from_hostname: null
+    #from_heloname: null 
+    enveloppe_sender: user@external.org
+    #enveloppe_recipients: []
+    #sender: null
+    #recipients: []
+    #body: null
+    subject: Test1
+    #random_files: 0
+    #is_multipart: false
+    #is_bounce: null
+    #filter_status: null
+    #min_size: 0
+    #sent_date: null
+    #lang: null
+    #charset: utf-8
+    domains: *default_domains
+    mynetworks: *default_mynetworks
+    
+    
