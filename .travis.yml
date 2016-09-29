@@ -8,7 +8,7 @@ python:
 install:
   - travis_retry pip install nose coverage flake8
   - travis_retry pip install coveralls
-  - travis_retry pip install -e .
+  - travis_retry pip install -e .[gevent]
 
 script: nosetests --with-coverage fake_mail_client
 
