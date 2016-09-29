@@ -21,7 +21,9 @@ setup(
     description='Mail Tools for SMTP load testing',
     long_description=get_readme(),
     author='Stéphane RAULT',
+    license='BSD',
     author_email='stephane.rault@radicalspam.org',
+    keywords=['testing', 'mail', 'smtp'],
     classifiers=[
         'Topic :: Communications :: Email',
         'Development Status :: 4 - Beta',
@@ -29,7 +31,7 @@ setup(
         'Programming Language :: Python',
         'Programming Language :: Python :: 3',
         'Programming Language :: Python :: 3.5',
-        'License :: OSI Approved',
+        'License :: OSI Approved :: BSD License',
         'Intended Audience :: Developers',
         'Intended Audience :: System Administrators'
     ],
