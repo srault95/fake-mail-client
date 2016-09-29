@@ -1,3 +1,4 @@
+# -*- coding: utf-8 -*-
 
 import sys
 import logging.config
@@ -73,7 +74,6 @@ def utcnow():
     return arrow.utcnow().datetime
 
 def generate_key():
-    """Génère un ID unique de 64 caractères"""
     new_uuid = str(uuid.uuid4())
     return str(hashlib.sha1(six.b(new_uuid)).hexdigest())
 
