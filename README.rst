@@ -6,7 +6,7 @@ Fake SMTP Client
 Requires
 --------
 
-- Python 3.4+
+- Python 3.4 (Tested with Python 3.4.2)
 
 Backends for parallel sent
 --------------------------
@@ -297,7 +297,7 @@ TODO
     :target: https://pypi.python.org/pypi/fake-mail-client
     :alt: License
 
-.. |pypi wheel| image:: https://pypip.in/wheel/fake-mail-client/badge.png
+.. |pypi wheel| image:: https://img.shields.io/pypi/wheel/fake-mail-client.svg?maxAge=2592000
     :target: https://pypi.python.org/pypi/fake-mail-client/
     :alt: Python Wheel
 
