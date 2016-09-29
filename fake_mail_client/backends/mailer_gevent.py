@@ -1,13 +1,19 @@
 # -*- coding: utf-8 -*-
 
-from gevent import monkey
-monkey.patch_all()
-
-from gevent import pool
-import time 
+try:
+    from gevent import monkey
+    monkey.patch_all()
+    from gevent import pool
+    GEVENT_ENABLE = True
+except ImportError:
+    GEVENT_ENABLE = False
+        
+import time
+import unittest 
 
 from fake_mail_client.mailer import SMTPClient
 
+@unittest.skipIf(GEVENT_ENABLE, "Skip Gevent not installed")
 class GeventSMTPClient(SMTPClient):
 
     def send_multi_parallel(self, messages):
