@@ -1,7 +1,7 @@
 Fake SMTP Client
 ================
 
-|Build Status| |Coveralls|
+|Build Status| |Coveralls| |pypi licence| |pypi wheel| |pypi downloads| |pypi version| |requires status|
 
 Requires
 --------
@@ -11,13 +11,13 @@ Requires
 Backends for parallel sent
 --------------------------
 
-- Gevent
-- concurrent.futures
+- `concurrent.futures`_
+- `Gevent`_
 
 Usage
 -----
 
-::
+.. code-block:: bash
 
    $ pip install https://github.com/srault95/fake-mail-client/archive/master.zip
 
@@ -29,7 +29,7 @@ Usage
 Use API
 -------
 
-::
+.. code-block:: python
 
    # With default values
    >>> from fake_mail_client.mailer import SMTPClient
@@ -55,7 +55,7 @@ Example - YAML story
 
 - see sample file: fake-mail-tests.yml.sample
 
-::
+.. code-block:: bash
 
    $ mv fake-mail-tests.yml.sample fake-mail-tests.yml
 
@@ -65,11 +65,11 @@ Example - YAML story
 Example - One mail - json format
 --------------------------------
 
-::
+.. code-block:: bash
 
    $ fake-mailer sendmail -H localhost -P 2500 -O json
    
-::
+.. code-block:: json
 
    {
        "datas": [
@@ -141,11 +141,11 @@ Example - One mail - json format
 Example - parallel with Gevent - pprint format
 ----------------------------------------------
 
-::
+.. code-block:: bash
 
    $ fake-mailer sendmail -H localhost -P 2500 -B gevent --count 2 --parallel 2 -O pprint
 
-::
+.. code-block:: python
 
    {
      'metas': {
@@ -293,3 +293,25 @@ TODO
    :target: https://coveralls.io/github/srault95/fake-mail-client?branch=master
    :alt: Coverage
    
+.. |pypi licence| image:: https://img.shields.io/pypi/l/fake-mail-client.svg
+    :target: https://pypi.python.org/pypi/fake-mail-client
+    :alt: License
+
+.. |pypi wheel| image:: https://pypip.in/wheel/fake-mail-client/badge.png
+    :target: https://pypi.python.org/pypi/fake-mail-client/
+    :alt: Python Wheel
+
+.. |pypi downloads| image:: https://img.shields.io/pypi/dm/fake-mail-client.svg
+    :target: https://pypi.python.org/pypi/fake-mail-client
+    :alt: Number of PyPI downloads
+
+.. |pypi version| image:: https://img.shields.io/pypi/v/fake-mail-client.svg
+    :target: https://pypi.python.org/pypi/fake-mail-client
+    :alt: Latest Version
+
+.. |requires status| image:: https://requires.io/github/srault95/fake-mail-client/requirements.svg?branch=master
+     :target: https://requires.io/github/srault95/fake-mail-client/?branch=master
+     :alt: Requirements Status
+     
+.. _`Gevent`: http://www.gevent.org/
+.. _`concurrent.futures`: https://docs.python.org/3/library/concurrent.futures.html
