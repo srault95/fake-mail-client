@@ -289,7 +289,7 @@ TODO
    :target: https://travis-ci.org/srault95/fake-mail-client
    :alt: Travis Build Status
    
-.. |Coveralls| image:: https://coveralls.io/repos/srault95/fake-mail-client/badge.svg?branch=master&service=github
+.. |Coveralls| image:: https://coveralls.io/repos/github/srault95/fake-mail-client/badge.svg?branch=master
    :target: https://coveralls.io/github/srault95/fake-mail-client?branch=master
    :alt: Coverage
    
