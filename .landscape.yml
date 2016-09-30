@@ -1,0 +1,26 @@
+doc-warnings: true
+test-warnings: false
+strictness: veryhigh
+
+autodetect: true
+
+#max-line-length depend strictness (80 for very high, 100 for high, 160 for medium and below)
+max-line-length: 80
+
+python-targets:
+  - 3
+  
+ignore-paths:
+  - fake_mail_client/tests
+  
+ignore-patterns:
+  - ^.*\.yml$
+
+pep8:
+  full: true
+#  disable:
+#    - E1002
+#    - E226
+#    - W293
+#    - E302
+#    - E41
