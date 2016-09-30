@@ -53,5 +53,10 @@ setup(
         'fake-mailer = fake_mail_client.runner:main',
       ],
     },
+    tests_require=[
+        'nose>=1.0'
+        'coverage',
+        'flake8'
+    ],      
     test_suite='nose.collector',
 )
