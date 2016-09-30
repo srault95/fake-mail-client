@@ -1,12 +1,18 @@
 # -*- coding: utf-8 -*-
 
-from pprint import pprint
+try:
+    from fake_mail_client.backends.mailer_gevent import GeventSMTPClient as SMTPClient
+    GEVENT_ENABLE = True
+except ImportError:
+    GEVENT_ENABLE = False
 
-from fake_mail_client.backends.mailer_gevent import GeventSMTPClient as SMTPClient
 from fake_mail_client.message import MessageFaker
 
+import unittest 
+from pprint import pprint
 from ..test_mailer import BaseMailerTestCase
 
+@unittest.skipIf(not GEVENT_ENABLE, "Skip Gevent not installed")
 class GeventMailerTestCase(BaseMailerTestCase):
     
     # nosetests -s -v fake_mail_client.tests.test_backends.test_mailer_gevent:GeventMailerTestCase

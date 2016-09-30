@@ -1,18 +1,14 @@
 # -*- coding: utf-8 -*-
 
-import sys
-import unittest
 import time
+import concurrent.futures
 
 from fake_mail_client.mailer import SMTPClient
 
-@unittest.skipIf(sys.version_info.major < 3 and sys.version_info.minor < 2, "Skip Python Version")
 class FuturesSMTPClient(SMTPClient):
 
     def send_multi_parallel(self, messages):
         
-        import concurrent.futures
-
         with concurrent.futures.ThreadPoolExecutor(max_workers=self.parallel) as executor:
 
             results = []
