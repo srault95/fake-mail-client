@@ -9,7 +9,7 @@ install:
   - travis_retry pip install coveralls
   - travis_retry pip install -e .[gevent]
 
-script: nosetests --with-coverage fake_mail_client
+script: nosetests --with-coverage --cover-package fake_mail_client --cover-inclusive
 
 after_script: 
   - coveralls --verbose
