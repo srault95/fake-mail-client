@@ -1,18 +1,29 @@
+sudo: false
 language: python
 
-python:
-  - "3.4"
-  #TODO: - "3.5"
+python: 3.5
+
+env:
+  - TOXENV=py34
+  - TOKENV=py35
+  - TOXENV=py34gevent
 
 install:
-  - travis_retry pip install nose coverage flake8
-  - travis_retry pip install coveralls
-  - travis_retry pip install -e .[gevent]
+  - travis_retry pip install tox
+  #- travis_retry pip install nose coverage flake8
+  #- travis_retry pip install coveralls
+  #- travis_retry pip install -e .[gevent]
 
-script: nosetests --with-coverage --cover-package fake_mail_client --cover-inclusive
+script: tox
+#script: nosetests --with-coverage --cover-package fake_mail_client --cover-inclusive
+
+cache:
+  directories:
+    - .tox
+    - $HOME/.cache/pip
 
 after_script: 
-  - coveralls --verbose
+  - COVERALLS_REPO_TOKEN=uNHUDeDBW9zFvnuU91vMs8kSQwPV6eePZ coveralls --verbose
 
 notifications:
   email: true
