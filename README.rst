@@ -6,7 +6,7 @@ Fake SMTP Client
 Requires
 --------
 
-- Python 3.4 (Tested with Python 3.4.2)
+- Python 3.4+
 
 Backends for parallel sent
 --------------------------
