@@ -150,7 +150,7 @@ Example - parallel with Gevent - pprint format
 
 .. code-block:: bash
 
-   $ fake-mailer sendmail -H localhost -P 2500 -B gevent --count 2 --parallel 2 -O pprint
+   $ fake-mailer sendmail -H localhost -P 2500 -B gevent --count 2 --concurrency 2 -O pprint
 
 .. code-block:: python
 
