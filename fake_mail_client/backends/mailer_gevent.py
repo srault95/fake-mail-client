@@ -7,9 +7,9 @@ from fake_mail_client.mailer import SMTPClient
 
 class GeventSMTPClient(SMTPClient):
 
-    def send_multi_parallel(self, messages):
+    def send_multi_concurrency(self, messages):
         greenlets = []
-        _pool = pool.Pool(self.parallel)        
+        _pool = pool.Pool(self.concurrency)        
         
         for message in messages:
             if self.sleep_interval > 0:

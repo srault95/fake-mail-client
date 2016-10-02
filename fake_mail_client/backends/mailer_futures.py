@@ -7,9 +7,9 @@ from fake_mail_client.mailer import SMTPClient
 
 class FuturesSMTPClient(SMTPClient):
 
-    def send_multi_parallel(self, messages):
+    def send_multi_concurrency(self, messages):
         
-        with concurrent.futures.ThreadPoolExecutor(max_workers=self.parallel) as executor:
+        with concurrent.futures.ThreadPoolExecutor(max_workers=self.concurrency) as executor:
 
             results = []
             
