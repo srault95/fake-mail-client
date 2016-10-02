@@ -1,8 +1,10 @@
 #!/usr/bin/env python
 # -*- coding: utf-8 -*-
 
+import os
 import sys
 from pprint import pprint
+import json
 
 import click
 
@@ -52,6 +54,10 @@ opt_out = click.option('--out', '-O',
                           default='line', 
                           show_default=True,
                           help='Output format')
+
+opt_json_result = click.option('--json-result', 
+                               type=click.Path(exists=False), 
+                               help='JSON file for test report')
 
 opt_backend = click.option('--backend', '-B', 
               required=False,
@@ -204,6 +210,7 @@ def sendmail_report(results, out='line'):
 @opt_config_file
 @opt_backend
 @opt_out
+@opt_json_result
 @click.option('--host', '-H', default="localhost", 
               show_default=True, help='SMTP Server host.')
 @click.option('--port', '-P', default=25, type=int, 
@@ -214,7 +221,8 @@ def sendmail_report(results, out='line'):
               show_default=True, help='Number of message send.')
 @click.option('--parallel', default=1, type=int, 
               show_default=True, help='Number of parallel message.')
-def cmd_sendmail(host=None, port=None, source_address=None, backend="default", out='print', count=1, parallel=1, **kwargs):
+def cmd_sendmail(host=None, port=None, source_address=None, backend="default", 
+                 out='print', json_result=None, count=1, parallel=1, **kwargs):
     """Sendmail command."""
     
     ctx = Context(**kwargs)
@@ -262,7 +270,13 @@ def cmd_sendmail(host=None, port=None, source_address=None, backend="default", o
         
         results = [client.send(message)]
     
-    sendmail_report(results, out=out)
+    if json_result:
+        if os.path.exists(json_result):
+            os.remove(json_result)
+        with open(json_result, 'w') as fp:
+            json.dump(results, fp, indent=1)
+    else:
+        sendmail_report(results, out=out)
 
 def main():
     cli()
