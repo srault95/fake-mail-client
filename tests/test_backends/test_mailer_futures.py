@@ -20,23 +20,23 @@ class FuturesMailerTestCase(BaseMailerTestCase):
 
     def test_sendmail(self):
         
-        parallel = 5
+        concurrency = 5
         
         with self.start_server() as server:
             
             client = SMTPClient(host=self.host, port=self.port, 
-                                parallel=parallel)
-            messages = [MessageFaker().create_message() for i in range(parallel)]
+                                concurrency=concurrency)
+            messages = [MessageFaker().create_message() for i in range(concurrency)]
             messages_byID = {msg["id"]: msg for msg in messages}
             
-            results = client.send_multi_parallel(messages)
-            self.assertEquals(len(results), parallel)
+            results = client.send_multi_concurrency(messages)
+            self.assertEqual(len(results), concurrency)
             #pprint(results)
             for result in results:
                 self.assertSendResult(result)                
                 msg = messages_byID[result["id"]]
-                #self.assertEquals(server_msg["mailfrom"], msg["from"]) 
-                #self.assertEquals(server_msg["rcpttos"], msg["tos"])
-            self.assertEquals(len(server._messages), parallel)
+                #self.assertEqual(server_msg["mailfrom"], msg["from"]) 
+                #self.assertEqual(server_msg["rcpttos"], msg["tos"])
+            self.assertEqual(len(server._messages), concurrency)
             #pprint(server._messages)
  
