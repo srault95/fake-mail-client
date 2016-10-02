@@ -13,4 +13,4 @@ class MailerTestCase(unittest.TestCase):
             self.assertTrue(field in msg, "not field is msg [%s]" % field)
             self.assertIsNotNone(msg[field], "field is None [%s]" % field)
             
-        self.assertEquals(len(msg["tos"]), 1)
+        self.assertEqual(len(msg["tos"]), 1)

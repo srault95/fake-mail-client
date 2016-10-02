@@ -6,6 +6,7 @@
 *.hgignore
 .tox
 .coverage
+.eggs/
 htmlcov
 docs/_build
 dist

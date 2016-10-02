@@ -58,7 +58,7 @@ class SMTPClient(object):
                  tls=False, 
                  login=False, username=None, password=None,
                  debug_level=0,
-                 parallel=1,
+                 concurrency=1,
                  sleep_interval=0):
         
         self.host = host
@@ -78,7 +78,7 @@ class SMTPClient(object):
         self.debug_level = debug_level
         
         self.sleep_interval = sleep_interval
-        self.parallel = parallel
+        self.concurrency = concurrency
         
     def send_multi(self, messages):
         """Sent sequential messages"""
@@ -87,7 +87,7 @@ class SMTPClient(object):
             results.append(self.send(message))
         return results
 
-    def send_multi_parallel(self, messages):
+    def send_multi_concurrency(self, messages):
         raise NotImplementedError()
         
     def send(self, message):

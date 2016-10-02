@@ -29,13 +29,13 @@ class BaseMailerTestCase(unittest.TestCase):
         for cmd in ["connect", "ehlo", "mail", "rcpt", "data", "quit"]:
             self.assertTrue(cmd in result)
             
-        self.assertEquals(result["connect"]["code"], 220)
-        self.assertEquals(result["ehlo"]["code"], 250)
-        self.assertEquals(result["mail"]["code"], 250)
+        self.assertEqual(result["connect"]["code"], 220)
+        self.assertEqual(result["ehlo"]["code"], 250)
+        self.assertEqual(result["mail"]["code"], 250)
         for r in result["rcpt"]:
-            self.assertEquals(r["code"], 250)
-        self.assertEquals(result["data"]["code"], 250)
-        self.assertEquals(result["quit"]["code"], 221)
+            self.assertEqual(r["code"], 250)
+        self.assertEqual(result["data"]["code"], 250)
+        self.assertEqual(result["quit"]["code"], 221)
         
         duration = 0
         for key, field in result.items():
@@ -45,7 +45,7 @@ class BaseMailerTestCase(unittest.TestCase):
             elif isinstance(field, dict) and 'duration' in field:
                 duration += field['duration']
         
-        self.assertEquals(duration, result["duration"])
+        self.assertEqual(duration, result["duration"])
 
     @contextlib.contextmanager
     def start_server(self):
@@ -77,10 +77,10 @@ class MailerTestCase(BaseMailerTestCase):
             #pprint(server._messages)
             self.assertSendResult(result)
             
-            self.assertEquals(len(server._messages), 1)
+            self.assertEqual(len(server._messages), 1)
             server_msg = server._messages[0]
-            self.assertEquals(server_msg["mailfrom"], msg["from"]) 
-            self.assertEquals(server_msg["rcpttos"], msg["tos"]) 
+            self.assertEqual(server_msg["mailfrom"], msg["from"]) 
+            self.assertEqual(server_msg["rcpttos"], msg["tos"]) 
 
     
 
