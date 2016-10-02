@@ -7,6 +7,7 @@ from pprint import pprint
 import json
 
 import click
+import arrow
 
 from fake_mail_client.utils import configure_logging, load_config
 from fake_mail_client import version
@@ -64,7 +65,7 @@ opt_backend = click.option('--backend', '-B',
               default="default", 
               show_default=True,
               type=click.Choice(list(BACKENDS.keys())), 
-              help='Concurrency backend for parallel send')
+              help='Concurrency backend')
 
 class Context(object):
     def __init__(self, 
@@ -157,37 +158,30 @@ def cli():
     """Fake Mail Client Commands."""
     pass
 
-def sendmail_report(results, out='line'):
+def sendmail_report(datas, out='line'):
     import tablib
-    import arrow
-    data = tablib.Dataset(headers=['From', 'Duration', 'Success'])
-    for r in results:
-        success = "success"
-        if not r['success']:
-            success = "fail"
-        mail_from = None
-        if "mail" in r:
-            mail_from = r["mail"]["value"]
-        data.append([
-            #r['id'], 
-            mail_from,
-            "%.2f" % r['duration'], 
-            success            
-        ])
+
+    if not out in ['json', 'pprint']:
+        data = tablib.Dataset(headers=['From', 'Duration', 'Success'])
+        for r in datas["results"]:
+            success = "success"
+            if not r['success']:
+                success = "fail"
+            mail_from = None
+            if "mail" in r:
+                mail_from = r["mail"]["value"]
+            data.append([
+                #r['id'], 
+                mail_from,
+                "%.2f" % r['duration'], 
+                success            
+            ])
     
     if out == "json":
         from json import dump
-        output = {
-            "metas": {"date": arrow.utcnow().for_json()},
-            "datas": results
-        }
-        dump(output, sys.stdout, indent=4)
+        dump(datas, sys.stdout, indent=4)
     elif out == "pprint":
-        output = {
-            "metas": {"date": arrow.utcnow().for_json()},
-            "datas": results
-        }
-        pprint(output, width=120, compact=True)
+        pprint(datas, width=120, compact=True)
     elif out == "html":
         #TODO: reste body/title/date
         print(data.html)
@@ -219,10 +213,10 @@ def sendmail_report(results, out='line'):
               show_default=False, help='Source Address.')
 @click.option('--count', default=1, type=int, 
               show_default=True, help='Number of message send.')
-@click.option('--parallel', default=1, type=int, 
-              show_default=True, help='Number of parallel message.')
+@click.option('--concurrency', '-U', default=1, type=int, 
+              show_default=True, help='Messages concurrency')
 def cmd_sendmail(host=None, port=None, source_address=None, backend="default", 
-                 out='print', json_result=None, count=1, parallel=1, **kwargs):
+                 out='print', json_result=None, count=1, concurrency=1, **kwargs):
     """Sendmail command."""
     
     ctx = Context(**kwargs)
@@ -232,7 +226,7 @@ def cmd_sendmail(host=None, port=None, source_address=None, backend="default",
         host = ctx.config["global"]["host"]
         port = ctx.config["global"]["port"]
         source_address = ctx.config["global"]["source_address"]
-        parallel = ctx.config["global"]["parallel"]
+        concurrency = ctx.config["global"]["concurrency"]
         #count = ctx.config["global"]["count"]
         count = len(ctx.config["tests"])
     
@@ -240,7 +234,7 @@ def cmd_sendmail(host=None, port=None, source_address=None, backend="default",
     client = klass(host=host, 
                    port=port, 
                    source_address=source_address,
-                   parallel=parallel)
+                   concurrency=concurrency)
     """
     TODO: timeout global
     TODO: timeout per smtp
@@ -261,7 +255,7 @@ def cmd_sendmail(host=None, port=None, source_address=None, backend="default",
         else:
             messages = [MessageFaker().create_message() for i in range(count)]
         
-        results = client.send_multi_parallel(messages)
+        results = client.send_multi_concurrency(messages)
     else:
         if ctx.config:
             message = MessageFaker(**ctx.config["tests"][0]).create_message()
@@ -270,13 +264,28 @@ def cmd_sendmail(host=None, port=None, source_address=None, backend="default",
         
         results = [client.send(message)]
     
+    metas = {
+        "config": ctx.config, 
+        "date": arrow.utcnow().for_json(),
+        "backend": backend,
+        "host": host,
+        "port": port,
+        "source_address": source_address,
+        "concurrency": concurrency,
+        "count": count,
+    }
+    datas = {
+        "metas": metas,
+        "results": results
+    }
+    
     if json_result:
         if os.path.exists(json_result):
             os.remove(json_result)
         with open(json_result, 'w') as fp:
-            json.dump(results, fp, indent=1)
+            json.dump(datas, fp, indent=1)
     else:
-        sendmail_report(results, out=out)
+        sendmail_report(datas, out=out)
 
 def main():
     cli()
