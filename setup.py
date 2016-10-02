@@ -1,5 +1,6 @@
 # -*- coding: utf-8 -*-
 
+import sys
 import os
 
 from setuptools import setup, find_packages
@@ -13,6 +14,11 @@ def get_readme():
         with open(readme_path) as fp:
             return fp.read()
     return ""
+
+
+extra_opts = {"packages": find_packages(exclude=["tests", "tests.*"])}
+if "test" in sys.argv or "nosetests" in sys.argv:
+    extra_opts['packages'] = find_packages()
 
 setup(
     name='fake-mail-client',
@@ -38,7 +44,7 @@ setup(
     ],
     include_package_data=True,
     zip_safe=False,
-    packages=find_packages(),
+    use_2to3=True,
     install_requires=[
         'fake-factory',
         'arrow',
@@ -56,8 +62,9 @@ setup(
     },
     tests_require=[
         'nose>=1.0'
-        'coverage',
+        'coverage>=3.7.1',
         'flake8'
     ],      
     test_suite='nose.collector',
+    **extra_opts
 )

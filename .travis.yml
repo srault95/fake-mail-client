@@ -10,12 +10,8 @@ env:
 
 install:
   - travis_retry pip install tox
-  #- travis_retry pip install nose coverage flake8
-  #- travis_retry pip install coveralls
-  #- travis_retry pip install -e .[gevent]
 
-script: tox
-#script: nosetests --with-coverage --cover-package fake_mail_client --cover-inclusive
+script: tox -- --with-coverage
 
 cache:
   directories:
