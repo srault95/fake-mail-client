@@ -25,6 +25,15 @@ Usage
    $ pip install https://github.com/srault95/fake-mail-client/archive/master.zip[gevent]
 
    $ fake-mailer sendmail --help
+   
+With Docker
+-----------
+
+.. code-block:: bash
+
+   $ docker build -t srault95/fake-mail-client https://github.com/srault95/fake-mail-client.git#master
+   
+   $ docker run -it --rm srault95/fake-mail-client --help
 
 Use API
 -------
