@@ -61,7 +61,7 @@ setup(
       ],
     },
     tests_require=[
-        'nose>=1.0'
+        'nose>=1.0',
         'coverage>=3.7.1',
         'flake8'
     ],      
