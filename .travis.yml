@@ -7,11 +7,12 @@ env:
   - TOXENV=py34
   - TOKENV=py35
   - TOXENV=py34gevent
+  - TOXENV=flake8
 
 install:
   - travis_retry pip install tox
 
-script: tox -- --with-coverage
+script: tox
 
 cache:
   directories:
