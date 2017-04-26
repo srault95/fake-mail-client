@@ -3,6 +3,13 @@ Fake SMTP Client
 
 |Build Status| |Coveralls| |pypi licence| |pypi wheel| |pypi downloads| |pypi version| |requires status|
 
+Features
+--------
+
+- XCLIENT Protocol : http://www.postfix.org/XCLIENT_README.html
+- XFORWARD Protocol : http://www.postfix.org/XFORWARD_README.html
+- Postfix parallelized SMTP/LMTP test generator : http://www.postfix.org/smtp-source.1.html
+
 Requires
 --------
 
@@ -32,6 +39,8 @@ With Docker
 .. code-block:: bash
 
    $ docker run -it --rm srault95/fake-mail-client --help
+   
+   $ docker run -it --rm --entrypoint smtp-source srault95/fake-mail-client -h
 
 Use API
 -------
@@ -277,6 +286,15 @@ Example - parallel with Gevent - pprint format
                'success': True}],
   }
       
+
+Postfix smtp-source
+-------------------
+
+- See http://www.postfix.org/smtp-source.1.html
+
+::
+
+   smtp-source -s 1 -l 1024 -m 1 -c -f root@localhost -t postmaster@localhost -4 127.0.0.1:25
       
 TODO
 ----
